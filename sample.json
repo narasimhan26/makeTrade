@@ -15,7 +15,9 @@
 
 {
   "_id": "SOME_RANDOM_UNIQUE_VAL",
-  "portfolio": [],
+  "portfolio": {
+    
+  },
 
 
 }

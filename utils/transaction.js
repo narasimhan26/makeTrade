@@ -2,7 +2,7 @@ const { tradeType } = require('./enums');
 
 exports.buyShare = (user, tradeRequest) => {
   const {portfolios} = user;
-  console.log('Inside buynewsjare');
+  // console.log('Inside buynewsjare');
   portfolios.forEach(security => {
     if (security.ticker_symbol === tradeRequest.ticker_symbol) {
       const updatedShares = security.shares + tradeRequest.shares;
@@ -11,7 +11,6 @@ exports.buyShare = (user, tradeRequest) => {
       security['average_trade_price'] = updatedTradeprice;
       return;
     }
-    return security;
   });
   user['portfolios'] = portfolios;
   return user;
@@ -19,7 +18,7 @@ exports.buyShare = (user, tradeRequest) => {
 
 exports.sellShare = (user, tradeRequest) => {
   const newPortfolios = user.portfolios;
-  console.log('Inside sellshare');
+  // console.log('Inside sellshare');
   newPortfolios.forEach((security) => {
     if (security.ticker_symbol === tradeRequest.ticker_symbol) {
       const updatedShares = security.shares - tradeRequest.shares;
@@ -34,6 +33,7 @@ exports.sellShare = (user, tradeRequest) => {
 }
 
 exports.addNewSecurity = (user, tradeRequest) => {
+  // console.log('insidenewsec', user, tradeRequest);
   const {portfolios} = user;
   const newSecurity = {
     name: tradeRequest.name || '',
@@ -75,9 +75,10 @@ exports.removeTrade = (user, tradeRequest) => {
 
       if (tradeRequest.type === tradeType.buy) {
         let updatedShares = security.shares - tradeRequest.shares;
-        let updatedTradeprice = 0;
-        if (updatedShares > 0) {
-          updatedTradeprice = ((security.average_trade_price * security.shares) - (tradeRequest.trade_price * tradeRequest.shares)) / updatedShares;
+        let updatedTradeprice = ((security.average_trade_price * security.shares) - (tradeRequest.trade_price * tradeRequest.shares)) / updatedShares;
+
+        if (updatedShares === 0) {
+          updatedTradeprice = security.average_trade_price;
         }
         security['shares'] = updatedShares;
         security['average_trade_price'] = updatedTradeprice;

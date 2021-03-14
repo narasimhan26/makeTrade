@@ -1,8 +1,9 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb://localhost:27017/test2', {
+    const conn = await mongoose.connect(`mongodb+srv://Make_Trade:${process.env.DBPASSWORD}@expense-tracker.mmqvn.mongodb.net/MakeTrade?retryWrites=true&w=majority`, {
       useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true
